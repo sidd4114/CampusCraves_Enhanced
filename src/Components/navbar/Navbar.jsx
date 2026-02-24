@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import './Navbar.css';
-import { toast } from 'react-toastify'; // Import toast
 
 const Navbar = ({ onLogout, user }) => {
     const [menu, setMenu] = useState("home");
@@ -26,12 +25,7 @@ const Navbar = ({ onLogout, user }) => {
 
     const handleAuthAction = () => {
         if (user) {
-            onLogout(); // Logs out the user
-            // Show toast when user logs out
-            toast.success("You have logged out successfully!", {
-                position: "top-center",
-                autoClose: 5000, // Adjust the autoClose time as needed
-            });
+            onLogout(); // toast is shown inside onLogout (ClientProviders)
         } else {
             router.push("/login");
         }

@@ -84,6 +84,11 @@ const Checkout = () => {
         name: "Campus Craves",
         description: "Food Order Payment",
         order_id: orderData.orderId,
+        prefill: {
+          name: user?.displayName || user?.email || "",
+          email: user?.email || "",
+          contact: user?.phoneNumber || "9999999999",
+        },
         handler: async function (paymentResponse) {
           try {
             // Step 3: Verify payment server-side
