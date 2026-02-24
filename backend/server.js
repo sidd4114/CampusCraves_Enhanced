@@ -9,10 +9,16 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:3000",
+    "https://campuscraves.vercel.app",
     process.env.FRONTEND_URL,
   ].filter(Boolean),
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
 }));
+
+app.options("*", cors()); // Handle CORS preflight for all routes
+
 app.use(express.json());
 
 // Health check
