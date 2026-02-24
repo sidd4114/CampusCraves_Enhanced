@@ -9,8 +9,8 @@ function SignInwithGoogle() {
   const googleLogin = () => {
     const provider = new GoogleAuthProvider();
     signInWithRedirect(auth, provider).catch((error) => {
-      console.error("Error starting Google Sign-In: ", error.message);
-      toast.error("Google Sign-In failed. Please try again.", {
+      console.error("Google Sign-In error:", error.code, error.message);
+      toast.error(`Google Sign-In failed: ${error.code || error.message}`, {
         position: "bottom-center",
       });
     });
