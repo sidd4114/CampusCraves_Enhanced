@@ -8,9 +8,25 @@ import { onAuthStateChanged } from "firebase/auth";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
-  const [cartItems, setCartItems] = useState({});
+  // Initialise from localStorage so cart survives page refreshes
+  const [cartItems, setCartItems] = useState(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      const saved = localStorage.getItem("campuscraves_cart");
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
   const [foodList, setFoodList] = useState([]); // New state for foodList
   const [user, setUser] = useState(null);
+
+  // Persist cart to localStorage on every change
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("campuscraves_cart", JSON.stringify(cartItems));
+    }
+  }, [cartItems]);
 
   // Fetch food items from Firestore
   useEffect(() => {

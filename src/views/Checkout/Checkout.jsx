@@ -84,6 +84,36 @@ const Checkout = () => {
         name: "Campus Craves",
         description: "Food Order Payment",
         order_id: orderData.orderId,
+        // Explicitly enable all methods including UPI
+        method: {
+          upi: true,
+          card: true,
+          netbanking: true,
+          wallet: true,
+          emi: false,
+        },
+        config: {
+          display: {
+            blocks: {
+              upi: {
+                name: "Pay via UPI",
+                instruments: [
+                  { method: "upi", flows: ["intent", "collect", "qr"] },
+                ],
+              },
+              other: {
+                name: "Other Methods",
+                instruments: [
+                  { method: "card" },
+                  { method: "netbanking" },
+                  { method: "wallet" },
+                ],
+              },
+            },
+            sequence: ["block.upi", "block.other"],
+            preferences: { show_default_blocks: false },
+          },
+        },
         handler: async function (paymentResponse) {
           try {
             // Step 3: Verify payment server-side
@@ -120,13 +150,32 @@ const Checkout = () => {
             );
 
             if (result?.id) {
+              // Build itemized snapshot for the receipt
+              const orderedItems = Object.keys(cartItems)
+                .filter((id) => cartItems[id] > 0)
+                .map((id) => {
+                  const item = foodList.find((p) => p._id === id);
+                  return item
+                    ? { name: item.name, qty: cartItems[id], price: item.price }
+                    : null;
+                })
+                .filter(Boolean);
+
+              const grandTotal = totalAmount + 20 + Math.round(totalAmount * 0.05);
+
               setCartItems({});
               sessionStorage.setItem('orderDetails', JSON.stringify({
                 orderId: result.id,
                 paymentId: paymentResponse.razorpay_payment_id,
                 amount: totalAmount,
+                grandTotal,
                 paymentMethod: "Razorpay",
                 queueNumber: suggestedQueue,
+                orderType,
+                pickupDate: orderType === "preorder" ? pickupDate : null,
+                pickupTime: orderType === "preorder" ? pickupTime : null,
+                items: orderedItems,
+                placedAt: new Date().toISOString(),
               }));
               router.push("/thank-you");
             } else {
