@@ -1,12 +1,12 @@
 'use client';
-import { signInWithEmailAndPassword, getRedirectResult } from "firebase/auth";
-import React, { useState, useEffect } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
 import { auth, db } from "../../Components/firebase";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import SignInwithGoogle from "../../Components/SignInwithGoogle";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import './NewLogin.css'
 
 function NewLogin() {
@@ -14,31 +14,6 @@ function NewLogin() {
   const [password, setPassword] = useState("");
   const [forgotPasswordMode, setForgotPasswordMode] = useState(false);
   const router = useRouter();
-
-  // Handle Google redirect result when user returns from Google auth
-  useEffect(() => {
-    getRedirectResult(auth)
-      .then(async (result) => {
-        if (!result) return; // No redirect result (normal page load)
-        const user = result.user;
-        await setDoc(doc(db, "Users", user.uid), {
-          email: user.email,
-          firstName: user.displayName || "",
-          lastName: "",
-          photo: user.photoURL || "",
-        }, { merge: true });
-        toast.success(`Welcome, ${user.displayName || "User"}! You have logged in successfully.`, {
-          position: "top-center",
-        });
-        router.push("/home");
-      })
-      .catch((error) => {
-        if (error.code !== 'auth/no-current-user') {
-          console.error("Google redirect error:", error.message);
-          toast.error("Google Sign-In failed: " + error.message, { position: "top-center" });
-        }
-      });
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
