@@ -84,36 +84,6 @@ const Checkout = () => {
         name: "Campus Craves",
         description: "Food Order Payment",
         order_id: orderData.orderId,
-        // Explicitly enable all methods including UPI
-        method: {
-          upi: true,
-          card: true,
-          netbanking: true,
-          wallet: true,
-          emi: false,
-        },
-        config: {
-          display: {
-            blocks: {
-              upi: {
-                name: "Pay via UPI",
-                instruments: [
-                  { method: "upi", flows: ["intent", "collect", "qr"] },
-                ],
-              },
-              other: {
-                name: "Other Methods",
-                instruments: [
-                  { method: "card" },
-                  { method: "netbanking" },
-                  { method: "wallet" },
-                ],
-              },
-            },
-            sequence: ["block.upi", "block.other"],
-            preferences: { show_default_blocks: false },
-          },
-        },
         handler: async function (paymentResponse) {
           try {
             // Step 3: Verify payment server-side
