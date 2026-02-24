@@ -1,0 +1,59 @@
+/* ─── Food Display ──────────────────────────── */
+.food-display {
+    margin-top: 80px;
+    padding: 0 40px;
+}
+
+.food-display-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.food-display-header .section-label {
+    display: block;
+    margin-bottom: 16px;
+}
+
+.food-display h2 {
+    font-family: 'Georgia', serif;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 0.04em;
+}
+
+.food-display-divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    margin: 20px auto 0;
+    border: none;
+}
+
+.food-display-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 28px;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .food-display {
+        padding: 0 16px;
+        margin-top: 48px;
+    }
+    .food-display-header {
+        margin-bottom: 36px;
+    }
+    .food-display-list {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .food-display-list {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+}

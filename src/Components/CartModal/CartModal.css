@@ -1,0 +1,108 @@
+/* --- Cart Modal ---------------------------------- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeInOverlay 0.4s ease-out forwards;
+    backdrop-filter: blur(8px);
+  }
+  
+  .modal-content {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-medium);
+    padding: 40px 36px;
+    border-radius: 4px;
+    box-shadow: var(--shadow-lg);
+    width: 90%;
+    max-width: 460px;
+    text-align: center;
+    opacity: 0;
+    animation: slideUpModal 0.4s ease-out forwards;
+    position: relative;
+  }
+
+  .modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  }
+  
+  .modal-content h2 {
+    font-family: 'Georgia', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    letter-spacing: 0.04em;
+  }
+  
+  .modal-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    line-height: 1.65;
+  }
+  
+  .modals-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+  }
+  
+  .modal-button {
+    padding: 12px 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    width: 30%;
+    transition: all 0.3s ease;
+    flex-grow: 1;
+    min-width: 100px;
+  }
+  
+  .modal-button.login-button {
+    background: var(--accent-gold);
+    color: var(--bg-primary);
+    border-color: var(--accent-gold);
+  }
+  
+  .modal-button.login-button:hover {
+    background: var(--accent-gold-light);
+    border-color: var(--accent-gold-light);
+    box-shadow: 0 0 20px rgba(201,169,110,0.3);
+  }
+  
+  .modal-button.no-thanks-button {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border-medium);
+  }
+  
+  .modal-button.no-thanks-button:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+  }
+
+  @keyframes slideUpModal {
+    0% { opacity: 0; transform: translateY(24px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeInOverlay {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  

@@ -1,0 +1,111 @@
+/* --- Explore Menu -------------------------------- */
+.explore-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  padding: 80px 40px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.explore-menu h1 {
+  font-family: 'Georgia', serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.explore-menu-text {
+  width: min(80%, 680px);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  text-align: center;
+}
+
+.explore-menu-list {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  text-align: center;
+  margin: 16px 0;
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 20px 16px;
+}
+
+.explore-menu-list::-webkit-scrollbar { height: 4px; }
+.explore-menu-list::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 2px;
+}
+.explore-menu-list::-webkit-scrollbar-track { background: var(--bg-primary); }
+
+.explore-menu-list-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.explore-menu-list-item:hover { transform: translateY(-4px); }
+
+.explore-menu-list-item img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  border: 2px solid var(--border-subtle);
+  filter: brightness(0.82) saturate(0.85);
+}
+
+.explore-menu-list-item:hover img {
+  filter: brightness(1) saturate(1.1);
+  border-color: var(--accent-gold-dark);
+  box-shadow: 0 0 20px rgba(201,169,110,0.2);
+}
+
+.explore-menu-list-item img.active {
+  border: 2px solid var(--accent-gold);
+  box-shadow: 0 0 24px rgba(201,169,110,0.3);
+  filter: brightness(1) saturate(1.1);
+}
+
+.explore-menu-list-item p {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.explore-menu-list-item:hover p { color: var(--accent-gold); }
+
+@media (max-width: 768px) {
+    .explore-menu {
+        padding: 48px 16px;
+        gap: 16px;
+    }
+    .explore-menu-text {
+        width: 100%;
+    }
+    .explore-menu-list {
+        gap: 24px;
+        padding: 16px 8px;
+    }
+    .explore-menu-list-item img {
+        width: 80px;
+        height: 80px;
+    }
+}

@@ -1,0 +1,216 @@
+/* ─── Hero / Header ─────────────────────────── */
+.header {
+    height: 92vh;
+    min-height: 560px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-primary);
+}
+
+.header-bg {
+    position: absolute;
+    inset: 0;
+    background: url("/bg4.jpg") no-repeat center center / cover;
+    filter: brightness(0.35) saturate(0.8);
+    transform: scale(1.05);
+    transition: transform 8s ease;
+}
+
+.header:hover .header-bg {
+    transform: scale(1);
+}
+
+/* Overlay gradient */
+.header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to right,
+        rgba(10,10,10,0.85) 0%,
+        rgba(10,10,10,0.5) 50%,
+        rgba(10,10,10,0.1) 100%
+    );
+    z-index: 1;
+}
+
+/* Bottom gradient */
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, var(--bg-primary), transparent);
+    z-index: 1;
+}
+
+.header-contents {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+    max-width: 680px;
+    align-items: flex-start;
+    gap: 24px;
+    top: 50%;
+    left: 7vw;
+    transform: translateY(-50%);
+    animation: heroFadeIn 1.2s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+.header-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-eyebrow::before,
+.header-eyebrow::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--accent-gold);
+    opacity: 0.6;
+}
+
+.header-contents h2 {
+    font-family: 'Georgia', serif;
+    font-weight: 300;
+    color: var(--text-primary);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    margin: 0;
+}
+
+.header-contents h2 span {
+    color: var(--accent-gold);
+    font-style: italic;
+}
+
+.header-contents p {
+    color: var(--text-secondary);
+    font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+    line-height: 1.75;
+    max-width: 480px;
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .header {
+        height: 85vh;
+        min-height: 480px;
+    }
+    .header-contents {
+        width: 90%;
+        left: 5vw;
+        gap: 16px;
+    }
+    .header-contents h2 {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
+    }
+    .header-contents p {
+        font-size: 0.9rem;
+        max-width: 100%;
+    }
+    .header-contents button {
+        padding: 12px 24px;
+        font-size: 0.73rem;
+    }
+}
+
+.header-contents button {
+    border: 1px solid var(--accent-gold);
+    color: var(--bg-primary);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    background: var(--accent-gold);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.header-contents button:hover {
+    background: transparent;
+    color: var(--accent-gold);
+    box-shadow: 0 0 30px rgba(201,169,110,0.25);
+}
+
+.header-btn-secondary {
+    border: 1px solid rgba(240,230,211,0.3);
+    color: var(--text-primary);
+    background: transparent;
+    font-weight: 500;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.header-btn-secondary:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+/* Scroll indicator */
+.header-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+}
+
+.header-scroll::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent-gold), transparent);
+}
+
+@keyframes heroFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(calc(-50% + 30px));
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+}
+

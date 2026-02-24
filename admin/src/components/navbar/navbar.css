@@ -1,0 +1,27 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 5%;
+    border-bottom: 2px solid beige; 
+    background: linear-gradient(to right,white, #f5f0ef,rgb(243, 8, 8)); /* Gradient Example */
+ 
+}
+
+.navbar h2{
+   color: crimson;
+   margin: 0;
+   font-size: 35px;
+}
+
+.navbar h3 {
+    font-size: 18px;
+    color: rgb(36, 35, 35);
+   font-style: italic;
+}
+.navbar.profile{
+    width: 23px;
+    height: 23px; /* Keep it square */
+    object-fit: cover;
+
+}

@@ -1,0 +1,157 @@
+/* ============================================
+   CAMPUSCRAVES — FINE DINING DARK THEME
+   Global Design System
+============================================ */
+
+:root {
+  --bg-primary:       #0a0a0a;
+  --bg-surface:       #141414;
+  --bg-elevated:      #1c1c1c;
+  --bg-card:          #171717;
+  --accent-gold:      #c9a96e;
+  --accent-gold-light:#e8c98a;
+  --accent-gold-dark: #a07840;
+  --text-primary:     #f0e6d3;
+  --text-secondary:   #9a8c7a;
+  --text-muted:       #5a5045;
+  --border-subtle:    #2a2520;
+  --border-medium:    #3d3530;
+  --shadow-sm:        0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md:        0 8px 32px rgba(0,0,0,0.6);
+  --shadow-lg:        0 16px 64px rgba(0,0,0,0.8);
+  --shadow-gold:      0 0 30px rgba(201,169,110,0.15);
+  --radius-sm:        6px;
+  --radius-md:        12px;
+  --radius-lg:        20px;
+  --font-serif:       'Georgia', 'Times New Roman', serif;
+  --transition-base:  all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--accent-gold);
+  transition: var(--transition-base);
+}
+
+a:hover {
+  color: var(--accent-gold-light);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-gold-dark);
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-gold);
+  color: var(--bg-primary);
+}
+
+/* Gold Divider Utility */
+.gold-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  margin: 16px auto;
+  border: none;
+}
+
+/* Section label utility */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+/* Override Bootstrap dark mode conflicts */
+.container, .container-fluid {
+  color: var(--text-primary);
+}
+
+/* Bootstrap .card override for dark mode */
+.card {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.card-title { color: var(--text-primary) !important; }
+.card-text { color: var(--text-secondary) !important; }
+
+/* Bootstrap form controls */
+.form-control {
+  background-color: var(--bg-surface) !important;
+  border-color: var(--border-medium) !important;
+  color: var(--text-primary) !important;
+}
+
+.form-control:focus {
+  background-color: var(--bg-elevated) !important;
+  border-color: var(--accent-gold-dark) !important;
+  box-shadow: 0 0 0 0.15rem rgba(201,169,110,0.2) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Bootstrap button overrides */
+.btn-outline-light {
+  border-color: var(--border-medium) !important;
+  color: var(--text-secondary) !important;
+}
+
+.btn-outline-light:hover {
+  background-color: var(--bg-elevated) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Toast overrides */
+.Toastify__toast {
+  background: var(--bg-elevated) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: 3px !important;
+}
+
+.Toastify__toast--success { border-left: 3px solid var(--accent-gold) !important; }

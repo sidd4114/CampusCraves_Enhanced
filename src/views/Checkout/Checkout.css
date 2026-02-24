@@ -1,0 +1,220 @@
+/* --- Checkout ------------------------------------ */
+.checkout-container {
+  width: 90%;
+  max-width: 480px;
+  margin: 80px auto 60px;
+  padding: 40px 36px;
+  border-radius: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.checkout-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 28px;
+  font-family: 'Georgia', serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+}
+
+.option-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.button-group button {
+  flex: 1;
+  padding: 11px;
+  border: 1px solid var(--border-medium);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.button-group button.selected {
+  background: var(--accent-gold);
+  color: var(--bg-primary);
+  border-color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.button-group button:hover:not(.selected) {
+  border-color: var(--accent-gold-dark);
+  color: var(--accent-gold);
+}
+
+input[type="date"],
+input[type="time"] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: 2px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.3s ease;
+  color-scheme: dark;
+}
+
+input[type="date"]:focus,
+input[type="time"]:focus { border-color: var(--accent-gold-dark); }
+
+.cart-summary {
+  margin-bottom: 24px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.cart-summary h3 {
+  font-family: 'Georgia', serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 14px 16px;
+  background: var(--bg-surface);
+  margin: 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cart-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-summary ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.88rem;
+}
+
+.summary-item-name {
+  color: var(--text-primary);
+}
+
+.summary-qty {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-left: 4px;
+}
+
+.summary-item-price {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.summary-breakdown {
+  padding: 12px 16px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.summary-row.summary-total {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 10px;
+  margin-top: 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.place-order-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid var(--accent-gold);
+  background: var(--accent-gold);
+  color: var(--bg-primary);
+  cursor: pointer;
+  border-radius: 2px;
+  margin-top: 24px;
+  transition: all 0.3s ease;
+}
+
+.place-order-btn:hover {
+  background: transparent;
+  color: var(--accent-gold);
+  box-shadow: 0 0 24px rgba(201,169,110,0.25);
+}
+
+.place-order-btn:disabled {
+  background: var(--bg-elevated, #2a2a2a);
+  border-color: var(--border-medium, #333);
+  color: var(--text-muted, #555);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.payment-info {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.payment-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 540px) {
+  .checkout-container {
+    margin: 60px 12px 40px;
+    padding: 28px 18px;
+    width: auto;
+  }
+  .button-group {
+    flex-direction: column;
+  }
+  .button-group button {
+    width: 100%;
+  }
+}

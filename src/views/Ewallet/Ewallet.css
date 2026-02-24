@@ -1,0 +1,266 @@
+/* --- eWallet Page -------------------------------- */
+.ewallet-container {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 60px 40px;
+    gap: 60px;
+    background: var(--bg-primary);
+}
+
+.ewallet-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 480px;
+}
+
+.ewallet-img {
+    width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+    border-radius: 4px;
+    filter: brightness(0.85) saturate(0.8);
+}
+
+.ewallet-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
+    max-width: 480px;
+}
+
+.ewallet-intro {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+}
+
+.ewallet-title {
+    font-family: 'Georgia', serif;
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
+    font-weight: 300;
+    color: var(--text-primary);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+}
+
+.ewallet-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.75;
+    text-align: left;
+}
+
+.ewallet-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--accent-gold);
+    background: var(--accent-gold);
+    color: var(--bg-primary);
+    padding: 12px 28px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+}
+
+.ewallet-button:hover {
+    background: transparent;
+    color: var(--accent-gold);
+    box-shadow: 0 0 20px rgba(201,169,110,0.25);
+}
+
+/* How It Works */
+.how-it-works-container {
+    padding: 80px 40px;
+    background: var(--bg-surface);
+    text-align: left;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.section-title {
+    font-family: 'Georgia', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 40px;
+    letter-spacing: 0.04em;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.step-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 24px 16px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-gold-dark);
+    box-shadow: var(--shadow-gold);
+}
+
+.step-icon { font-size: 2rem; margin-bottom: 12px; }
+
+.step-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.04em;
+}
+
+/* Why eWallet */
+.why-ewallet-container {
+    padding: 80px 40px;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 24px;
+}
+
+.benefit-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+    border-color: var(--accent-gold-dark);
+    box-shadow: var(--shadow-gold);
+}
+
+.benefit-image {
+    width: 100%;
+    aspect-ratio: 1;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 3px;
+    filter: brightness(0.7) saturate(0.8);
+}
+
+.benefit-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.benefit-description {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+/* FAQ */
+.faq-container {
+    padding: 80px 40px;
+    background: var(--bg-surface);
+    text-align: left;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.faq-title {
+    font-family: 'Georgia', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    letter-spacing: 0.04em;
+}
+
+.faq-item {
+    background: var(--bg-card);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-subtle);
+    transition: border-color 0.3s ease;
+    overflow: hidden;
+}
+
+.faq-item:hover { border-color: var(--border-medium); }
+
+.faq-summary {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    align-items: center;
+    padding: 16px 20px;
+    background: transparent;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    list-style: none;
+    transition: color 0.3s ease;
+}
+
+.faq-summary:hover { color: var(--accent-gold); }
+
+.faq-question { margin: 0; padding-right: 12px; }
+
+.faq-icon { width: 18px; height: 18px; filter: invert(1) brightness(0.6); transition: transform 0.3s ease; }
+.faq-item[open] .faq-icon { transform: rotate(180deg); }
+
+.faq-answer {
+    font-size: 0.83rem;
+    color: var(--text-secondary);
+    padding: 0 20px 16px;
+    line-height: 1.7;
+}
+
+details[open] summary { color: var(--accent-gold); }
+
+@media (max-width: 768px) {
+    .ewallet-container {
+        flex-direction: column;
+        padding: 60px 20px;
+        gap: 32px;
+    }
+    .ewallet-image, .ewallet-text {
+        max-width: 100%;
+    }
+    .ewallet-text {
+        align-items: center;
+        text-align: center;
+    }
+    .ewallet-description { text-align: center; }
+    .how-it-works-container {
+        padding: 48px 20px;
+    }
+}

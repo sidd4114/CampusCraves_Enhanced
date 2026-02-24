@@ -1,0 +1,306 @@
+/* --- Your Orders --------------------------------- */
+.your-order-page {
+    padding: 100px 40px 60px;
+    background: var(--bg-primary);
+    min-height: 100vh;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.yo-header {
+    margin-bottom: 32px;
+}
+
+.yo-title {
+    font-family: 'Georgia', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 300;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+}
+
+.yo-title span {
+    color: var(--accent-gold);
+}
+
+.yo-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Stats */
+.yo-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.yo-stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.yo-stat-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+}
+
+.yo-stat-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Tabs */
+.yo-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 24px;
+}
+
+.yo-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-family: sans-serif;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: -1px;
+}
+
+.yo-tab:hover { color: var(--text-primary); }
+
+.yo-tab.active {
+    color: var(--accent-gold);
+    border-bottom-color: var(--accent-gold);
+}
+
+.yo-tab-count {
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    border-radius: 999px;
+    padding: 1px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.yo-tab.active .yo-tab-count {
+    background: rgba(201,169,110,0.2);
+    color: var(--accent-gold);
+}
+
+/* Orders List */
+.yo-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.yo-empty {
+    padding: 48px;
+    text-align: center;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+}
+
+/* Order Card New */
+.order-card-new {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.order-card-new:hover {
+    border-color: var(--border-medium);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.order-card-new.current {
+    border-left: 3px solid var(--accent-gold);
+}
+
+.order-card-new.completed {
+    border-left: 3px solid var(--text-muted);
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.order-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.order-id-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    font-family: monospace;
+}
+
+.order-date {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: sans-serif;
+}
+
+.order-card-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.order-total-label {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--accent-gold);
+    font-family: sans-serif;
+}
+
+.expand-icon {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+/* Status Badges */
+.order-status-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: sans-serif;
+}
+
+.badge-placed {
+    background: rgba(201,169,110,0.15);
+    color: var(--accent-gold);
+    border: 1px solid rgba(201,169,110,0.3);
+}
+
+.badge-preorder {
+    background: rgba(100,160,255,0.12);
+    color: #6aa0ff;
+    border: 1px solid rgba(100,160,255,0.3);
+}
+
+.badge-completed {
+    background: rgba(100,210,120,0.12);
+    color: #60d078;
+    border: 1px solid rgba(100,210,120,0.3);
+}
+
+/* Order Card Body - expanded */
+.order-card-body {
+    border-top: 1px solid var(--border-subtle);
+    padding: 16px 20px 20px;
+}
+
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+    font-size: 0.88rem;
+}
+
+.order-items-table th {
+    text-align: left;
+    padding: 8px 12px;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--border-subtle);
+    font-weight: 600;
+}
+
+.order-items-table td {
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.order-items-table tfoot td {
+    color: var(--accent-gold);
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: none;
+    border-top: 1px solid var(--border-medium);
+}
+
+.no-items {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 20px !important;
+}
+
+.order-canteen {
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-family: sans-serif;
+}
+
+/* Loading / Error */
+.yo-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 16px;
+    color: var(--text-muted);
+}
+
+.yo-spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--border-subtle);
+    border-top-color: var(--accent-gold);
+    border-radius: 50%;
+    animation: yo-spin 0.8s linear infinite;
+}
+
+@keyframes yo-spin { to { transform: rotate(360deg); } }
+
+.yo-error {
+    text-align: center;
+    color: #ff6b6b;
+    padding: 40px;
+}
+
+@media (max-width: 600px) {
+    .your-order-page { padding: 80px 16px 40px; }
+    .yo-stats { grid-template-columns: repeat(3, 1fr); }
+    .order-card-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .order-card-right { width: 100%; justify-content: space-between; }
+    .yo-tab { padding: 10px 16px; font-size: 0.82rem; }
+}

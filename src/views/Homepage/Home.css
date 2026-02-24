@@ -1,0 +1,12 @@
+/* --- Homepage ------------------------------------ */
+.Homeconta {
+  background: var(--bg-primary);
+  min-height: 100vh;
+  margin: 0;
+}
+
+html {
+  background-color: var(--bg-primary);
+}
+
+  
