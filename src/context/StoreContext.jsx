@@ -20,6 +20,7 @@ const StoreContextProvider = (props) => {
   });
   const [foodList, setFoodList] = useState([]); // New state for foodList
   const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   // Persist cart to localStorage on every change
   useEffect(() => {
@@ -76,6 +77,7 @@ const StoreContextProvider = (props) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser || null);
+      setAuthLoading(false);
     });
 
     return () => unsubscribe();
@@ -88,6 +90,7 @@ const StoreContextProvider = (props) => {
     addToCart,
     removeFromCart,
     user,
+    authLoading,
     getTotalCartAmount,
   };
 

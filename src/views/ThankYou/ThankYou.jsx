@@ -66,7 +66,7 @@ const ThankYou = () => {
 
         {/*  Header  */}
         <div className="ty-header">
-          <div className="ty-check"></div>
+          <div className="ty-check">✓</div>
           <h1>Order Confirmed!</h1>
           <p className="ty-subtitle">Your food is being prepared fresh for you.</p>
         </div>
@@ -107,8 +107,8 @@ const ThankYou = () => {
         {orderDetails ? (
           <div className="ty-receipt">
             <div className="ty-receipt-header">
-              <span> Order Receipt</span>
-              <span className="ty-badge">Paid </span>
+              <span>🧾 Order Receipt</span>
+              <span className="ty-badge">✓ Paid</span>
             </div>
 
             <div className="ty-meta-grid">

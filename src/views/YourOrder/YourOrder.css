@@ -304,3 +304,123 @@
     .order-card-right { width: 100%; justify-content: space-between; }
     .yo-tab { padding: 10px 16px; font-size: 0.82rem; }
 }
+
+/* ── Item chips preview ─────────────────────── */
+.order-items-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.order-item-chip {
+    background: rgba(201,169,110,0.08);
+    border: 1px solid rgba(201,169,110,0.16);
+    color: #888;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-family: sans-serif;
+}
+
+.order-item-chip.muted {
+    background: transparent;
+    border-color: #2a2a2a;
+    color: #555;
+}
+
+.order-timeago {
+    color: #c9a96e;
+    font-size: 0.72rem;
+}
+
+/* ── Progress bar (active orders) ─────────── */
+.order-progress-bar {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    background: #0d0d0d;
+    border-top: 1px solid #1a1a1a;
+    overflow-x: auto;
+    gap: 0;
+}
+
+.op-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    min-width: 64px;
+}
+
+.op-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2a2a2a;
+    border: 2px solid #333;
+    transition: all 0.3s;
+}
+
+.op-step.done .op-dot {
+    background: #c9a96e;
+    border-color: #c9a96e;
+    box-shadow: 0 0 8px rgba(201,169,110,0.45);
+}
+
+.op-label {
+    font-size: 0.62rem;
+    color: #444;
+    text-align: center;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    max-width: 60px;
+}
+
+.op-step.done .op-label { color: #c9a96e; font-weight: 700; }
+
+.op-line {
+    flex: 1;
+    height: 2px;
+    background: #2a2a2a;
+    min-width: 20px;
+    margin-bottom: 16px;
+    transition: background 0.3s;
+}
+
+.op-line.done { background: #c9a96e; }
+
+/* ── Rejected notice ──────────────────────── */
+.order-rejected-notice {
+    padding: 10px 20px;
+    font-size: 0.82rem;
+    color: #f87171;
+    background: rgba(248,113,113,0.06);
+    border-top: 1px solid rgba(248,113,113,0.15);
+    font-family: sans-serif;
+}
+
+/* ── Extra info row ───────────────────────── */
+.order-extra-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #1a1a1a;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.order-extra-info strong {
+    color: #a8a098;
+}
+
+/* ── Rejected card border ─────────────────── */
+.order-card-new.rejected {
+    border-left: 3px solid rgba(248,113,113,0.5);
+}
