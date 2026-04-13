@@ -51,7 +51,7 @@
     z-index: 2;
     display: flex;
     flex-direction: column;
-    width: 55%;
+    width: clamp(320px, 55vw, 680px);
     max-width: 680px;
     align-items: flex-start;
     gap: 24px;
@@ -59,6 +59,8 @@
     left: 7vw;
     transform: translateY(-50%);
     animation: heroFadeIn 1.2s cubic-bezier(0.4,0,0.2,1) both;
+    /* GPU-promote text layer so blur doesn't repaint the bg */
+    will-change: filter, opacity, transform;
 }
 
 .header-eyebrow {
@@ -82,7 +84,7 @@
 }
 
 .header-contents h2 {
-    font-family: 'Georgia', serif;
+    font-family: var(--font-body);
     font-weight: 300;
     color: var(--text-primary);
     font-size: clamp(2.2rem, 5vw, 4rem);
@@ -124,6 +126,14 @@
     .header-contents h2 {
         font-size: clamp(1.8rem, 8vw, 2.8rem);
     }
+    .header-eyebrow {
+        gap: 8px;
+        letter-spacing: 0.24em;
+    }
+    .header-eyebrow::before,
+    .header-eyebrow::after {
+        width: 24px;
+    }
     .header-contents p {
         font-size: 0.9rem;
         max-width: 100%;
@@ -131,6 +141,21 @@
     .header-contents button {
         padding: 12px 24px;
         font-size: 0.73rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-contents {
+        width: calc(100% - 32px);
+        left: 16px;
+        gap: 14px;
+    }
+    .header-eyebrow::before,
+    .header-eyebrow::after {
+        width: 18px;
+    }
+    .header-scroll {
+        bottom: 22px;
     }
 }
 

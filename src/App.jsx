@@ -8,7 +8,7 @@ import Ewallet from "./legacyPages/Ewallet/Ewallet";
 import { auth } from "./Components/firebase"; // Import Firebase auth
 import { useEffect, useState } from "react";
 import { firebaseSignOut } from "./Components/firebase";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/bootstrap.nomap.css';
 import Cart from "./legacyPages/Cart/Cart";
 
 import Preorder from "./legacyPages/Preorder/Preorder";

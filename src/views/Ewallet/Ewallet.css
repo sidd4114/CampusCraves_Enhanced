@@ -47,7 +47,7 @@
 }
 
 .ewallet-title {
-    font-family: 'Georgia', serif;
+    font-family: var(--font-body);
     font-size: clamp(2.2rem, 4vw, 3.6rem);
     font-weight: 300;
     color: var(--text-primary);
@@ -95,7 +95,7 @@
 }
 
 .section-title {
-    font-family: 'Georgia', serif;
+    font-family: var(--font-body);
     font-size: 1.6rem;
     font-weight: 400;
     color: var(--text-primary);
@@ -197,7 +197,7 @@
 }
 
 .faq-title {
-    font-family: 'Georgia', serif;
+    font-family: var(--font-body);
     font-size: 1.6rem;
     font-weight: 400;
     color: var(--text-primary);

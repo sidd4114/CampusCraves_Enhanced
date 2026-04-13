@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/bootstrap.nomap.css';
 import 'react-toastify/dist/ReactToastify.css';
 import '../index.css';
 import ClientProviders from './ClientProviders';

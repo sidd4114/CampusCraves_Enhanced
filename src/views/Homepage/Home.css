@@ -1,12 +1,307 @@
-/* --- Homepage ------------------------------------ */
-.Homeconta {
-  background: var(--bg-primary);
-  min-height: 100vh;
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+html,
+body {
+  background: #000000;
+  color: #f5f0e8;
   margin: 0;
 }
 
-html {
-  background-color: var(--bg-primary);
+body.cinematic-lock {
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
-  
+.home-page {
+  --bg-primary:         #000000;
+  --bg-deep:            #000000;
+  --bg-elevated:        #0b0b10;
+  --text-primary:       #f5f0e8;
+  --text-secondary:     rgba(245, 240, 232, 0.72);
+  --text-muted:         rgba(245, 240, 232, 0.42);
+  --accent-gold:        #d2a869;
+  --accent-gold-light:  #e7c58b;
+  --accent-gold-dark:   #a06a2c;
+  --card-surface:       rgba(10, 10, 14, 0.7);
+  --card-surface-strong:rgba(12, 12, 18, 0.92);
+  --card-border:        rgba(255, 255, 255, 0.08);
+  --card-shadow:        0 22px 60px rgba(0, 0, 0, 0.6);
+  --card-shadow-hover:  0 28px 70px rgba(0, 0, 0, 0.65);
+  --radius-lg:          24px;
+  --font-display:       'Google Sans', 'Open Sans', 'Segoe UI', Tahoma, sans-serif;
+  --font-body:          'Open Sans', 'Segoe UI', Tahoma, sans-serif;
+
+  background:   var(--bg-primary);
+  color:        var(--text-primary);
+  font-family:  var(--font-body);
+  min-height:   100vh;
+}
+
+.home-page a {
+  color: inherit;
+}
+
+.home-page section + section {
+  margin-top: clamp(80px, 14vh, 180px);
+}
+
+/* ── Cinematic hero ──────────────────────────────────────────────────────────── */
+
+.cinematic-hero {
+  position: relative;
+  background: var(--bg-primary);
+  height: 100vh;
+}
+
+.cinematic-hero.is-pinned {
+  position: relative;
+}
+
+.cinematic-hero.is-unpinned {
+  position: relative;
+}
+
+/* The sticky container — stays pinned while parent scrolls */
+.pin-sticky {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cinematic-hero.is-unpinned .pin-sticky {
+  position: relative;
+  inset: auto;
+}
+
+/* Full-viewport stage */
+.frame-stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+.frame-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+}
+
+.frame-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ── Hero overlay ────────────────────────────────────────────────────────────── */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(80px, 10vh, 140px) 24px 40px;
+  transform: translateY(-2vh);
+  text-align: center;
+  background: transparent;
+  pointer-events: none; /* let scroll pass through overlay */
+  perspective: 900px;
+}
+
+/* Re-enable clicks on buttons inside the overlay */
+.hero-overlay a,
+.hero-overlay button {
+  pointer-events: auto;
+}
+
+.hero-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.45em;
+  font-size: 0.68rem;
+  color: var(--accent-gold);
+  margin-bottom: 18px;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.parallax-title {
+  font-family:    var(--font-display);
+  font-size:      clamp(4.6rem, 10vw, 8.2rem);
+  font-weight:    600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin:         0 0 18px;
+  line-height:    0.95;
+  text-shadow:    0 14px 40px rgba(0, 0, 0, 0.65);
+  will-change:    transform;
+  transform-origin: center;
+}
+
+.hero-lede {
+  max-width:   720px;
+  margin:      0 0 30px;
+  color:       var(--text-secondary);
+  font-size:   clamp(1rem, 1.7vw, 1.25rem);
+  line-height: 1.7;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  will-change: transform;
+}
+
+.eyebrow {
+  font-family:  var(--font-display);
+  text-transform: uppercase;
+  font-size:    0.7rem;
+  letter-spacing: 0.32em;
+  color:        var(--accent-gold);
+  margin:       0 0 8px;
+}
+
+.hero-actions {
+  display:         flex;
+  flex-wrap:       wrap;
+  gap:             14px;
+  justify-content: center;
+  will-change:     transform;
+}
+
+.btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         12px 24px;
+  border-radius:   999px;
+  text-decoration: none;
+  font-weight:     600;
+  font-size:       0.78rem;
+  letter-spacing:  0.16em;
+  text-transform:  uppercase;
+  border:          1px solid transparent;
+  transition:      transform 180ms ease, box-shadow 180ms ease,
+                   background 180ms ease, color 180ms ease;
+}
+
+.btn.primary {
+  background:  linear-gradient(135deg, #e0bb7e, #b57a35);
+  color:       #120b07;
+  box-shadow:  0 14px 30px rgba(0, 0, 0, 0.5);
+}
+
+.btn.ghost {
+  color:        var(--text-primary);
+  background:   rgba(10, 10, 14, 0.45);
+  border-color: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+}
+
+.btn:hover {
+  transform:  translateY(-2px);
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.55);
+}
+
+.scroll-hint {
+  margin-top:      28px;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             10px;
+  text-transform:  uppercase;
+  letter-spacing:  0.3em;
+  font-size:       0.66rem;
+  color:           var(--text-muted);
+}
+
+.scroll-hint::after {
+  content:    '';
+  width:      1px;
+  height:     44px;
+  background: linear-gradient(to bottom, var(--accent-gold), transparent);
+  animation:  scrollPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 1;   transform: scaleY(1);    }
+  50%       { opacity: 0.4; transform: scaleY(0.75); }
+}
+
+
+/* ── Home surface ────────────────────────────────────────────────────────────── */
+
+.home-surface {
+  padding:    0 clamp(20px, 6vw, 90px) 50px;
+  background: var(--bg-primary);
+}
+
+/* ── Scroll reveal section ─────────────────────────────────────────────────── */
+
+.reveal-section {
+  padding:    clamp(90px, 14vh, 160px) clamp(20px, 6vw, 90px);
+  background: linear-gradient(180deg, rgba(5, 5, 8, 0.9), rgba(0, 0, 0, 1));
+}
+
+.reveal-inner {
+  max-width: 820px;
+}
+
+.reveal-heading {
+  position:      relative;
+  margin:         14px 0 18px;
+  font-family:    'Google Sans', 'Open Sans', var(--font-display);
+  font-size:      clamp(4.2rem, 9vw, 6.6rem);
+  font-weight:    600;
+  line-height:    1.1;
+  letter-spacing: 0.01em;
+}
+
+.reveal-sub {
+  margin:      0;
+  color:       var(--text-secondary);
+  font-size:   clamp(1rem, 1.4vw, 1.2rem);
+  line-height: 1.7;
+}
+
+.reveal-letter-group {
+  display: inline;
+}
+
+.reveal-letter {
+  display: inline-block;
+  will-change: opacity, filter;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items:    stretch;
+  }
+
+  .parallax-title {
+    letter-spacing: 0.08em;
+  }
+}

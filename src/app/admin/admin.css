@@ -5,7 +5,7 @@
   min-height: 100vh;
   background: #0d0d0d;
   color: #e8e0d0;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
 }
 
 /* ─── Navbar ─────────────────────────────────── */
@@ -65,6 +65,7 @@
   color: #e8e0d0;
   margin: 0;
   letter-spacing: 0.02em;
+  font-family: var(--font-display);
 }
 
 .admin-panel-label {
@@ -72,7 +73,7 @@
   color: #c9a96e;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   border: 1px solid rgba(201,169,110,0.25);
   background: rgba(201,169,110,0.07);
   padding: 4px 12px;
@@ -132,7 +133,7 @@
   text-decoration: none;
   font-size: 0.875rem;
   transition: all 0.18s ease;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
   position: relative;
 }
@@ -206,12 +207,13 @@
   color: #e8e0d0;
   margin: 0 0 6px;
   letter-spacing: -0.01em;
+  font-family: var(--font-display);
 }
 
 .admin-page-sub {
   color: #555;
   font-size: 0.82rem;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   margin: 0 0 28px;
   letter-spacing: 0.01em;
 }
@@ -229,6 +231,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  font-family: var(--font-display);
 }
 
 .admin-section-title span {
@@ -237,22 +240,26 @@
   font-size: 0.72rem;
   padding: 3px 10px;
   border-radius: 999px;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   font-weight: 600;
 }
 
 .admin-table-wrap {
   overflow-x: auto;
-  border-radius: 8px;
-  border: 1px solid #2e2e2e;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  background: var(--card-surface);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   font-size: 0.88rem;
-  background: #1a1a1a;
+  background: transparent;
 }
 
 .admin-table th {
@@ -317,10 +324,13 @@
   padding: 40px;
   text-align: center;
   color: #555;
-  font-family: sans-serif;
-  background: #1a1a1a;
-  border-radius: 8px;
-  border: 1px solid #2e2e2e;
+  font-family: var(--font-body);
+  background: var(--card-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
 }
 
 /* ─── Admin Orders v2 (Zomato-style) ─────────── */
@@ -331,9 +341,12 @@
   gap: 10px 20px;
   margin-bottom: 24px;
   padding: 14px 18px;
-  background: #111;
-  border: 1px solid #1e1e1e;
-  border-radius: 8px;
+  background: var(--card-surface);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
 }
 
 .ao-legend-item {
@@ -341,7 +354,7 @@
   align-items: center;
   gap: 6px;
   font-size: 0.75rem;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   font-weight: 600;
   letter-spacing: 0.04em;
 }
@@ -370,7 +383,7 @@
   font-size: 0.875rem;
   padding: 10px 22px;
   cursor: pointer;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
   transition: all 0.2s;
   display: flex;
@@ -410,7 +423,7 @@
   font-size: 0.78rem;
   cursor: pointer;
   transition: all 0.2s;
-  font-family: sans-serif;
+  font-family: var(--font-body);
 }
 
 .ao-refresh:hover { border-color: #c9a96e; color: #c9a96e; }
@@ -424,14 +437,17 @@
 
 /* Order card */
 .ao-card {
-  background: #111;
-  border: 1px solid #222;
-  border-radius: 10px;
+  background: var(--card-surface);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
 }
 
-.ao-card:hover { border-color: #333; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+.ao-card:hover { transform: translateY(-4px); border-color: var(--card-border-strong); box-shadow: var(--card-shadow-hover); }
 
 .ao-card.ao-active  { border-left: 3px solid #c9a96e; }
 .ao-card.ao-completed { border-left: 3px solid #60d078; }
@@ -464,13 +480,13 @@
 .ao-customer {
   font-size: 0.8rem;
   color: #888;
-  font-family: sans-serif;
+  font-family: var(--font-body);
 }
 
 .ao-queue {
   font-size: 0.72rem;
   color: #c9a96e;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   font-weight: 600;
   background: rgba(201,169,110,0.1);
   padding: 2px 8px;
@@ -493,7 +509,7 @@
   padding: 4px 12px;
   border-radius: 999px;
   border: 1px solid;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   white-space: nowrap;
 }
 
@@ -501,13 +517,13 @@
   font-weight: 700;
   font-size: 1rem;
   color: #c9a96e;
-  font-family: sans-serif;
+  font-family: var(--font-body);
 }
 
 .ao-time {
   font-size: 0.72rem;
   color: #444;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   white-space: nowrap;
 }
 
@@ -558,13 +574,13 @@
 .ao-card-body {
   padding: 16px 20px 20px;
   border-top: 1px solid #1a1a1a;
-  background: #0e0e0e;
+  background: rgba(14,14,14,0.78);
 }
 
 .ao-items-table {
   width: 100%;
   border-collapse: collapse;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   font-size: 0.84rem;
   margin-bottom: 14px;
 }
@@ -597,7 +613,7 @@
   gap: 10px 20px;
   font-size: 0.78rem;
   color: #555;
-  font-family: sans-serif;
+  font-family: var(--font-body);
 }
 
 .ao-meta-row strong { color: #888; }
@@ -623,7 +639,7 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   letter-spacing: 0.03em;
 }
 
@@ -649,8 +665,8 @@
   width: 56px;
   height: 56px;
   object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid #2e2e2e;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
 }
 
 .admin-remove-btn {
@@ -672,10 +688,13 @@
 /* ─── Add Form ───────────────────────────────── */
 .admin-add-form {
   max-width: 600px;
-  background: #1a1a1a;
-  border: 1px solid #2e2e2e;
-  border-radius: 12px;
+  background: var(--card-surface);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
   padding: 36px;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
 }
 
 .admin-form-group {
@@ -689,7 +708,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 8px;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   font-weight: 600;
 }
 
@@ -704,7 +723,7 @@
   padding: 12px 14px;
   border-radius: 6px;
   font-size: 0.9rem;
-  font-family: sans-serif;
+  font-family: var(--font-body);
   outline: none;
   transition: border-color 0.2s;
 }

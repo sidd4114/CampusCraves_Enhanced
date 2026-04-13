@@ -22,7 +22,7 @@
 }
 
 .preorder-header h1 {
-  font-family: 'Georgia', serif;
+  font-family: var(--font-body);
   font-size: clamp(2.4rem, 5vw, 4.5rem);
   font-weight: 300;
   color: var(--text-primary);
@@ -112,7 +112,7 @@
 .step:hover::before { opacity: 1; }
 
 .step h2 {
-  font-family: 'Georgia', serif;
+  font-family: var(--font-body);
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--text-primary);

@@ -33,83 +33,98 @@ const Navbar = ({ onLogout, user }) => {
 
     return (
         <div className='navbar'>
-            <h2 onClick={() => handleMenuClick("home")}>CampusCraves.</h2>
+            <div className="navbar-inner">
+                <h2 onClick={() => handleMenuClick("home")}>CampusCraves.</h2>
 
-            {/* Desktop Menu */}
-            <ul className="navbar-menu-desktop">
-                <li
-                    onClick={() => handleMenuClick("home")}
-                    className={menu === "home" ? "active" : ""}
-                >
-                    Home
-                </li>
-                <li
-                    onClick={() => handleMenuClick("menu")}
-                    className={menu === "menu" ? "active" : ""}
-                >
-                    Menu
-                </li>
-                <li
-                    onClick={() => handleMenuClick("preorder")}
-                    className={menu === "preorder" ? "active" : ""}
-                >
-                    Preorder
-                </li>
-            </ul>
+                {/* Desktop Menu */}
+                <ul className="navbar-menu-desktop">
+                    <li
+                        onClick={() => handleMenuClick("home")}
+                        className={menu === "home" ? "active" : ""}
+                    >
+                        Home
+                    </li>
+                    <li
+                        onClick={() => handleMenuClick("menu")}
+                        className={menu === "menu" ? "active" : ""}
+                    >
+                        Menu
+                    </li>
+                    <li
+                        onClick={() => handleMenuClick("preorder")}
+                        className={menu === "preorder" ? "active" : ""}
+                    >
+                        Preorder
+                    </li>
+                </ul>
 
-            {/* Mobile overlay */}
-            {mobileOpen && <div className="navbar-overlay" onClick={() => setMobileOpen(false)} />}
+                {/* Mobile overlay */}
+                <div
+                    className={`navbar-overlay${mobileOpen ? ' is-visible' : ''}`}
+                    onClick={() => setMobileOpen(false)}
+                />
 
-            {/* Hamburger Menu */}
-            <ul className={`navbar-menu${mobileOpen ? ' mobile-open' : ''}`}>
-                <li
-                    onClick={() => handleMenuClick("home")}
-                    className={menu === "home" ? "active" : ""}
-                >
-                    Home
-                </li>
-                <li
-                    onClick={() => handleMenuClick("menu")}
-                    className={menu === "menu" ? "active" : ""}
-                >
-                    Menu
-                </li>
-                <li
-                    onClick={() => handleMenuClick("preorder")}
-                    className={menu === "preorder" ? "active" : ""}
-                >
-                    Preorder
-                </li>
-                <li
-                    onClick={() => handleMenuClick("your-order")}
-                    className={menu === "your-order" ? "active" : ""}
-                >
-                    YourOrder
-                </li>
-                {/* Show auth button in hamburger menu */}
-                <li className="navbar-menu-auth">
-                    <button className="Logout" onClick={() => { setMobileOpen(false); handleAuthAction(); }}>
+                {/* Hamburger Menu */}
+                <ul className={`navbar-menu${mobileOpen ? ' mobile-open' : ''}`}>
+                    <li className="navbar-menu-close">
+                        <button
+                            type="button"
+                            className="navbar-close-btn"
+                            onClick={() => setMobileOpen(false)}
+                            aria-label="Close menu"
+                        >
+                            Close
+                        </button>
+                    </li>
+                    <li
+                        onClick={() => handleMenuClick("home")}
+                        className={menu === "home" ? "active" : ""}
+                    >
+                        Home
+                    </li>
+                    <li
+                        onClick={() => handleMenuClick("menu")}
+                        className={menu === "menu" ? "active" : ""}
+                    >
+                        Menu
+                    </li>
+                    <li
+                        onClick={() => handleMenuClick("preorder")}
+                        className={menu === "preorder" ? "active" : ""}
+                    >
+                        Preorder
+                    </li>
+                    <li
+                        onClick={() => handleMenuClick("your-order")}
+                        className={menu === "your-order" ? "active" : ""}
+                    >
+                        YourOrder
+                    </li>
+                    {/* Show auth button in hamburger menu */}
+                    <li className="navbar-menu-auth">
+                        <button className="Logout" onClick={() => { setMobileOpen(false); handleAuthAction(); }}>
+                            {user ? "Logout" : "Login"}
+                        </button>
+                    </li>
+                </ul>
+
+                <div className="navbar-right">
+                    <div className="navbar-basket-icon"></div>
+                    <img src="/icons/shopping-cart.png" className='icon' onClick={() => router.push("/cart")} alt="cart icon" />
+                    <div className='dot'></div>
+                    <button className="Logout" onClick={handleAuthAction}>
                         {user ? "Logout" : "Login"}
                     </button>
-                </li>
-            </ul>
-
-            <div className="navbar-right">
-                <div className="navbar-basket-icon"></div>
-                <img src="./icons/shopping-cart.png" className='icon' onClick={() => router.push("/cart")} alt="cart icon" />
-                <div className='dot'></div>
-                <button className="Logout" onClick={handleAuthAction}>
-                    {user ? "Logout" : "Login"}
-                </button>
-                
-                {/* Hamburger - moved to right side */}
-                <button
-                    className={`navbar-hamburger${mobileOpen ? ' open' : ''}`}
-                    onClick={() => setMobileOpen(p => !p)}
-                    aria-label="Toggle menu"
-                >
-                    <span /><span /><span />
-                </button>
+                    
+                    {/* Hamburger - moved to right side */}
+                    <button
+                        className={`navbar-hamburger${mobileOpen ? ' open' : ''}`}
+                        onClick={() => setMobileOpen(p => !p)}
+                        aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                    >
+                        <span /><span /><span />
+                    </button>
+                </div>
             </div>
         </div>
     );

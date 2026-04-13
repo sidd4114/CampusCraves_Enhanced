@@ -3,7 +3,6 @@ import './Menu.css'
 import React, { useState } from 'react'
 import ExploreMenu from '../../Components/ExploreMenu/ExploreMenu'
 import Footer from '../../Components/Footer/Footer'
-import FoodDisplay from '../../Components/FoodDisplay/FoodDisplay'
 
 const Menu = () => {
   const[category,setCategory]=useState("All");
@@ -12,7 +11,6 @@ const Menu = () => {
   return (
     <div className='menu-page'>
       <ExploreMenu category={category} setCategory={setCategory}/>
-      <FoodDisplay category={category}/>
       <Footer/>
     </div>
   )

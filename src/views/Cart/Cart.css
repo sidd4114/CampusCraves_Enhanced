@@ -6,7 +6,7 @@
 }
 
 .cart-page-title {
-    font-family: 'Georgia', serif;
+    font-family: var(--font-body);
     font-size: clamp(1.6rem, 3vw, 2.4rem);
     font-weight: 300;
     color: var(--text-primary);
@@ -116,6 +116,18 @@
     .cart {
         padding: 80px 20px 40px;
     }
+    .cart-items-title,
+    .cart-items-item {
+        grid-template-columns: 72px minmax(0, 1.8fr) repeat(3, minmax(56px, 0.8fr)) 40px;
+    }
+    .cart-items-item {
+        padding: 14px 12px;
+        font-size: 0.84rem;
+    }
+    .cart-items-item img {
+        width: 60px;
+        height: 60px;
+    }
     .cart-bottom {
         flex-direction: column-reverse;
         gap: 32px;
@@ -126,6 +138,18 @@
     }
     .cart-promocode {
         max-width: 100%;
+    }
+}
+
+@media (max-width: 720px) {
+    .cart {
+        padding: 72px 12px 32px;
+    }
+    .cart-total {
+        padding: 24px 18px;
+    }
+    .cart-bottom {
+        margin: 28px auto 8px;
     }
 }
 
@@ -191,7 +215,7 @@
 }
 
 .cart-total h2 {
-    font-family: 'Georgia', serif;
+    font-family: var(--font-body);
     font-size: 1.4rem;
     font-weight: 400;
     color: var(--text-primary);
@@ -271,7 +295,7 @@
 }
 
 .empty-cart h3 {
-    font-family: 'Georgia', serif;
+    font-family: var(--font-body);
     font-size: 1.8rem;
     color: var(--text-primary);
     margin-bottom: 16px;

@@ -4,10 +4,10 @@
 ============================================ */
 
 :root {
-  --bg-primary:       #0a0a0a;
-  --bg-surface:       #141414;
-  --bg-elevated:      #1c1c1c;
-  --bg-card:          #171717;
+  --bg-primary:       #000000;
+  --bg-surface:       #000000;
+  --bg-elevated:      #000000;
+  --bg-card:          #000000;
   --accent-gold:      #c9a96e;
   --accent-gold-light:#e8c98a;
   --accent-gold-dark: #a07840;
@@ -16,6 +16,12 @@
   --text-muted:       #5a5045;
   --border-subtle:    #2a2520;
   --border-medium:    #3d3530;
+  --card-surface:     linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 48%, rgba(201,169,110,0.07) 100%);
+  --card-surface-strong: linear-gradient(160deg, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.05) 42%, rgba(201,169,110,0.10) 100%);
+  --card-border:      rgba(255,255,255,0.08);
+  --card-border-strong: rgba(201,169,110,0.22);
+  --card-shadow:      0 12px 32px rgba(0,0,0,0.45);
+  --card-shadow-hover:0 24px 56px rgba(0,0,0,0.62);
   --shadow-sm:        0 2px 8px rgba(0,0,0,0.4);
   --shadow-md:        0 8px 32px rgba(0,0,0,0.6);
   --shadow-lg:        0 16px 64px rgba(0,0,0,0.8);
@@ -23,7 +29,8 @@
   --radius-sm:        6px;
   --radius-md:        12px;
   --radius-lg:        20px;
-  --font-serif:       'Georgia', 'Times New Roman', serif;
+  --font-body:        -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', 'Segoe UI', system-ui, sans-serif;
+  --font-display:     -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', system-ui, sans-serif;
   --transition-base:  all 0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
@@ -35,19 +42,22 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
-  background-color: var(--bg-primary);
+  background-color: #000000;
   color: var(--text-primary);
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
   color: var(--text-primary);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -113,9 +123,13 @@ a:hover {
 
 /* Bootstrap .card override for dark mode */
 .card {
-  background-color: var(--bg-card) !important;
-  border-color: var(--border-subtle) !important;
+  background: var(--card-surface) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: var(--radius-lg) !important;
   color: var(--text-primary) !important;
+  box-shadow: var(--card-shadow) !important;
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
 }
 
 .card-title { color: var(--text-primary) !important; }

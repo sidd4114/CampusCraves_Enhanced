@@ -25,14 +25,14 @@ const FoodItem = ({ id, name, price, description, image }) => {
             <div className='food-item-counter'>
                 <img
                 onClick={()=>removeFromCart(id)}
-                src='./icons/cross1.png'
+                src='/icons/cross1.png'
                 alt='Decrease quantity'
                 className='quantity-btn'
                 />
                 <p>{cartItems[id]}</p>
                 <img
                 onClick={()=>addToCart(id)}
-                src='./icons/add1.png'
+                src='/icons/add1.png'
                 alt='Increase quantity'
                 className='quantity-btn'
                 />
