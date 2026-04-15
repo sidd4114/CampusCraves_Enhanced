@@ -14,6 +14,7 @@ export default function ClientProviders({ children }) {
   const [loading, setLoading] = useState(true);
   const [showLoader, setShowLoader] = useState(true);
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [framesLoaded, setFramesLoaded] = useState(true);
   const pathname = usePathname();
   const loaderRef = useRef(null);
   const loaderContentRef = useRef(null);
@@ -40,13 +41,30 @@ export default function ClientProviders({ children }) {
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const needsFrames = pathname === '/home' || pathname === '/';
+    if (!needsFrames) {
+      setFramesLoaded(true);
+      return;
+    }
+
+    const hasFrames = window.__ccFramesLoaded === true;
+    setFramesLoaded(hasFrames);
+    if (hasFrames) return;
+
+    const handleFramesLoaded = () => setFramesLoaded(true);
+    window.addEventListener('cc:frames-loaded', handleFramesLoaded);
+    return () => window.removeEventListener('cc:frames-loaded', handleFramesLoaded);
+  }, [pathname]);
+
+  useEffect(() => {
     if (!loaderRef.current || !loaderContentRef.current) return;
 
     if (loaderTweenRef.current) {
       loaderTweenRef.current.kill();
     }
 
-    if (loading || !pageLoaded) {
+    if (loading || !pageLoaded || !framesLoaded) {
       setShowLoader(true);
       gsap.set(loaderRef.current, { autoAlpha: 1, pointerEvents: 'auto' });
       gsap.set(loaderContentRef.current, { y: 10, scale: 0.98, opacity: 0 });
@@ -78,7 +96,7 @@ export default function ClientProviders({ children }) {
         loaderTweenRef.current.kill();
       }
     };
-  }, [pathname, loading, pageLoaded]);
+  }, [pathname, loading, pageLoaded, framesLoaded]);
 
   const handleLogout = async () => {
     try {
@@ -96,7 +114,7 @@ export default function ClientProviders({ children }) {
   const isAuthPage = pathname === '/login' || pathname === '/signup';
   const isAdminPage = pathname.startsWith('/admin');
 
-  if ((loading || !pageLoaded) && !showLoader) return null;
+  if ((loading || !pageLoaded || !framesLoaded) && !showLoader) return null;
 
   return (
     <StoreContextProvider>

@@ -23,6 +23,7 @@ function Home() {
   const [smoothProgress, setSmoothProgress] = useState(0);
   const [framesReady, setFramesReady] = useState(false);
   const [preloadStarted, setPreloadStarted] = useState(false);
+  const [framesPlayable, setFramesPlayable] = useState(false);
   const targetProgressRef = useRef(0);
   const smoothProgressRef = useRef(0);
   const rafRef = useRef(null);
@@ -30,6 +31,7 @@ function Home() {
   const touchStartRef = useRef(null);
   const canvasRef = useRef(null);
   const frameCacheRef = useRef([]);
+  const readyCountRef = useRef(0);
   const heroRef = useRef(null);
   const revealSectionRef = useRef(null);
   const revealTextRef = useRef(null);
@@ -49,8 +51,10 @@ function Home() {
   useEffect(() => {
     let isMounted = true;
     const firstFrame = new Image();
+    firstFrame.decoding = 'async';
     firstFrame.onload = () => {
       frameCacheRef.current[0] = firstFrame;
+      readyCountRef.current += 1;
       if (isMounted) {
         setFramesReady(true);
         setFrameIndex(0);
@@ -74,22 +78,62 @@ function Home() {
     const startPreload = () => {
       if (preloadStarted) return;
       setPreloadStarted(true);
+      window.__ccFramesLoaded = false;
 
-      const loadAll = () => {
-        frameSources.forEach((src, idx) => {
-          if (frameCacheRef.current[idx]) return;
-          const img = new Image();
-          img.onload = () => { frameCacheRef.current[idx] = img; };
-          img.onerror = () => { frameCacheRef.current[idx] = img; };
-          img.src = src;
-        });
+      const initialBatch = Math.min(36, FRAME_COUNT);
+      let cancelled = false;
+
+      const loadFrame = (idx) => new Promise((resolve) => {
+        if (frameCacheRef.current[idx]) {
+          resolve();
+          return;
+        }
+        const img = new Image();
+        img.decoding = 'async';
+        img.onload = () => {
+          frameCacheRef.current[idx] = img;
+          readyCountRef.current += 1;
+          resolve();
+        };
+        img.onerror = () => {
+          frameCacheRef.current[idx] = img;
+          resolve();
+        };
+        img.src = frameSources[idx];
+      });
+
+      const loadInitial = async () => {
+        for (let i = 1; i < initialBatch; i += 1) {
+          if (cancelled) return;
+          await loadFrame(i);
+        }
+        if (!cancelled) {
+          setFramesPlayable(true);
+        }
       };
 
-      if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(loadAll, { timeout: 1200 });
-      } else {
-        setTimeout(loadAll, 350);
-      }
+      const loadRest = async () => {
+        for (let i = initialBatch; i < frameSources.length; i += 1) {
+          if (cancelled) return;
+          await loadFrame(i);
+        }
+        if (!cancelled) {
+          window.__ccFramesLoaded = true;
+          window.dispatchEvent(new Event('cc:frames-loaded'));
+        }
+      };
+
+      loadInitial().then(() => {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(loadRest, { timeout: 1500 });
+        } else {
+          setTimeout(loadRest, 500);
+        }
+      });
+
+      return () => {
+        cancelled = true;
+      };
     };
 
     const observer = new IntersectionObserver(
@@ -119,7 +163,18 @@ function Home() {
     if (!ctx) return;
 
     const drawFrame = () => {
-      const img = frameCacheRef.current[frameIndex];
+      let img = frameCacheRef.current[frameIndex];
+      if (!img || !img.complete) {
+        let fallbackIndex = frameIndex;
+        while (fallbackIndex > 0) {
+          fallbackIndex -= 1;
+          const candidate = frameCacheRef.current[fallbackIndex];
+          if (candidate && candidate.complete) {
+            img = candidate;
+            break;
+          }
+        }
+      }
       if (!img || !img.complete) return;
 
       const { width: canvasWidth, height: canvasHeight } = canvas;
@@ -178,6 +233,7 @@ function Home() {
 
     const handleWheel = (event) => {
       if (!isPinned) return;
+      if (!framesPlayable) return;
       event.preventDefault();
       const delta = clamp(event.deltaY, -120, 120);
       const step = clamp(delta * 0.0009, -0.012, 0.012);
@@ -187,6 +243,7 @@ function Home() {
 
     const handleTouchStart = (event) => {
       if (!isPinned) return;
+      if (!framesPlayable) return;
       if (event.touches.length === 1) {
         touchStartRef.current = event.touches[0].clientY;
       }
@@ -194,6 +251,7 @@ function Home() {
 
     const handleTouchMove = (event) => {
       if (!isPinned) return;
+      if (!framesPlayable) return;
       if (touchStartRef.current === null) return;
       const currentY = event.touches[0].clientY;
       const delta = clamp(touchStartRef.current - currentY, -120, 120);
@@ -232,7 +290,7 @@ function Home() {
         rafRef.current = null;
       }
     };
-  }, [isPinned]);
+  }, [isPinned, framesPlayable]);
 
   const parallaxOffset = -12 + smoothProgress * 24;
   const titleScale = 0.9 + smoothProgress * 0.14;
