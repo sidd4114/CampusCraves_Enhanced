@@ -16,6 +16,12 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" as="image" href="/frames/frame_0001.png" />
+        <link rel="preload" as="image" href="/frames/frame_0002.png" />
+        <link rel="preload" as="image" href="/frames/frame_0003.png" />
+        <link rel="preload" as="image" href="/frames/frame_0004.png" />
+      </head>
       <body>
         <ClientProviders>{children}</ClientProviders>
       </body>
