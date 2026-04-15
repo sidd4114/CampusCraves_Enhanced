@@ -3,6 +3,39 @@ import React, { useMemo, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import './Aboutus.css';
 
+const TimelineItem = ({ member, index, total, scrollYProgress }) => {
+  const step = 1 / total;
+  const start = index * step;
+  const end = start + step;
+  const mid = (start + end) / 2;
+
+  const opacity = useTransform(
+    scrollYProgress,
+    [Math.max(0, start - 0.08), start, mid, end, Math.min(1, end + 0.08)],
+    [0.35, 0.6, 1, 0.6, 0.35]
+  );
+  const y = useTransform(scrollYProgress, [start, mid], [24, 0]);
+  const scale = useTransform(scrollYProgress, [start, mid], [0.97, 1]);
+
+  return (
+    <motion.div
+      className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}
+      style={{ opacity, y, scale }}
+    >
+      <div className="timeline-card">
+        <div className="timeline-media">
+          <img src={member.image} alt={member.name} />
+        </div>
+        <div className="timeline-copy">
+          <h3>{member.name}</h3>
+          <span>{member.role}</span>
+          <p>{member.copy}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Aboutus = () => {
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -52,39 +85,15 @@ const Aboutus = () => {
         </div>
 
         <div className="timeline-items">
-          {team.map((member, index) => {
-            const step = 1 / team.length;
-            const start = index * step;
-            const end = start + step;
-            const mid = (start + end) / 2;
-
-            const opacity = useTransform(
-              scrollYProgress,
-              [Math.max(0, start - 0.08), start, mid, end, Math.min(1, end + 0.08)],
-              [0.35, 0.6, 1, 0.6, 0.35]
-            );
-            const y = useTransform(scrollYProgress, [start, mid], [24, 0]);
-            const scale = useTransform(scrollYProgress, [start, mid], [0.97, 1]);
-
-            return (
-              <motion.div
-                key={member.name}
-                className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}
-                style={{ opacity, y, scale }}
-              >
-                <div className="timeline-card">
-                  <div className="timeline-media">
-                    <img src={member.image} alt={member.name} />
-                  </div>
-                  <div className="timeline-copy">
-                    <h3>{member.name}</h3>
-                    <span>{member.role}</span>
-                    <p>{member.copy}</p>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+          {team.map((member, index) => (
+            <TimelineItem
+              key={member.name}
+              member={member}
+              index={index}
+              total={team.length}
+              scrollYProgress={scrollYProgress}
+            />
+          ))}
         </div>
       </div>
     </section>
