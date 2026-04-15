@@ -48,13 +48,13 @@ export default function ClientProviders({ children }) {
       return;
     }
 
-    const hasFrames = window.__ccFramesLoaded === true;
-    setFramesLoaded(hasFrames);
-    if (hasFrames) return;
+    const hasPlayable = window.__ccFramesPlayable === true;
+    setFramesLoaded(hasPlayable);
+    if (hasPlayable) return;
 
-    const handleFramesLoaded = () => setFramesLoaded(true);
-    window.addEventListener('cc:frames-loaded', handleFramesLoaded);
-    return () => window.removeEventListener('cc:frames-loaded', handleFramesLoaded);
+    const handleFramesPlayable = () => setFramesLoaded(true);
+    window.addEventListener('cc:frames-playable', handleFramesPlayable);
+    return () => window.removeEventListener('cc:frames-playable', handleFramesPlayable);
   }, [pathname]);
 
   useEffect(() => {

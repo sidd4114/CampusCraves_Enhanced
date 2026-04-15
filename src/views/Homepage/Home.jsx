@@ -79,6 +79,7 @@ function Home() {
       if (preloadStarted) return;
       setPreloadStarted(true);
       window.__ccFramesLoaded = false;
+      window.__ccFramesPlayable = false;
 
       const initialBatch = Math.min(36, FRAME_COUNT);
       let cancelled = false;
@@ -109,6 +110,8 @@ function Home() {
         }
         if (!cancelled) {
           setFramesPlayable(true);
+          window.__ccFramesPlayable = true;
+          window.dispatchEvent(new Event('cc:frames-playable'));
         }
       };
 
