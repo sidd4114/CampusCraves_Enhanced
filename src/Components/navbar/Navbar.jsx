@@ -1,20 +1,64 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import './Navbar.css';
 
 const Navbar = ({ onLogout, user }) => {
     const [menu, setMenu] = useState("home");
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [isHidden, setIsHidden] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
+    const lastScrollY = useRef(0);
+    const ticking = useRef(false);
 
     // Update the menu state when the pathname changes
     useEffect(() => {
         const currentPage = pathname.split("/")[1];
         setMenu(currentPage);
     }, [pathname]);
+
+    useEffect(() => {
+        if (mobileOpen) {
+            setIsHidden(false);
+            return;
+        }
+
+        lastScrollY.current = window.scrollY || 0;
+
+        const handleScroll = () => {
+            if (ticking.current) {
+                return;
+            }
+
+            ticking.current = true;
+            window.requestAnimationFrame(() => {
+                const currentY = window.scrollY || 0;
+                const delta = currentY - lastScrollY.current;
+                const threshold = 12;
+
+                if (Math.abs(delta) >= threshold) {
+                    if (currentY <= 20) {
+                        setIsHidden(false);
+                    } else if (delta > 0) {
+                        setIsHidden(true);
+                    } else {
+                        setIsHidden(false);
+                    }
+                    lastScrollY.current = currentY;
+                }
+
+                ticking.current = false;
+            });
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [mobileOpen]);
 
     // Function to handle menu click and navigate
     const handleMenuClick = (page) => {
@@ -32,7 +76,7 @@ const Navbar = ({ onLogout, user }) => {
     };
 
     return (
-        <div className='navbar'>
+        <div className={`cc-navbar${isHidden ? ' cc-navbar--hidden' : ''}`}>
             <div className="navbar-inner">
                 <h2 onClick={() => handleMenuClick("home")}>CampusCraves.</h2>
 

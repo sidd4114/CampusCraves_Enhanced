@@ -32,6 +32,11 @@ function Home() {
   const revealSectionRef = useRef(null);
   const revealTextRef = useRef(null);
   const revealOriginalTextRef = useRef('');
+  const impactSectionRef = useRef(null);
+  const hasAnimatedImpactRef = useRef(false);
+  const [impactValues, setImpactValues] = useState([0, 0, 0]);
+  const [impactActive, setImpactActive] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const overlayProgress = useMotionValue(0);
   const overlayOpacity = useTransform(overlayProgress, [0, 0.12, 0.35], [0, 0.6, 1]);
 
@@ -63,6 +68,10 @@ function Home() {
       isMounted = false;
     };
   }, [frameSources]);
+
+  useEffect(() => {
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -260,6 +269,58 @@ function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const section = impactSectionRef.current;
+    if (!section) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const targets = [15, 3, 70];
+
+    if (reduceMotion) {
+      setImpactValues(targets);
+      hasAnimatedImpactRef.current = true;
+      return;
+    }
+
+    const duration = 1700;
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+    const animate = () => {
+      if (hasAnimatedImpactRef.current) return;
+      hasAnimatedImpactRef.current = true;
+      setImpactActive(true);
+      const start = performance.now();
+
+      const tick = (now) => {
+        const progress = Math.min(1, (now - start) / duration);
+        const eased = easeOutCubic(progress);
+        setImpactValues(targets.map((value) => Math.round(value * eased)));
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        }
+      };
+
+      requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animate();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="home-page">
       {/* ── Cinematic hero ── */}
@@ -295,7 +356,7 @@ function Home() {
               </div>
 
               <div className="scroll-hint" aria-hidden="true">
-                <span>Scroll to explore</span>
+                <span>{isTouchDevice ? 'Swipe to explore' : 'Scroll to explore'}</span>
               </div>
             </motion.div>
           </div>
@@ -315,6 +376,46 @@ function Home() {
           <p className="reveal-sub">
             From canteen to comfort, one bite at a time.
           </p>
+        </div>
+      </section>
+
+      <section
+        className="impact-section"
+        ref={impactSectionRef}
+        aria-label="Impact metrics"
+      >
+        <div className="impact-inner">
+          <p className="eyebrow">Impact in a 30-minute break</p>
+          <h2 className="impact-heading">Minutes back. Lines gone.</h2>
+          <p className="impact-sub">
+            Designed to turn a rushed break into a predictable, fast pickup.
+          </p>
+
+          <div className={`impact-grid ${impactActive ? 'is-active' : ''}`}>
+            <div className="impact-card">
+              <div className="impact-number">
+                <span className="impact-value">{impactValues[0]}</span>
+                <span className="impact-suffix"> min</span>
+              </div>
+              <p className="impact-label">saved per break</p>
+            </div>
+
+            <div className="impact-card">
+              <div className="impact-number">
+                <span className="impact-value">{impactValues[1]}</span>
+                <span className="impact-suffix">×</span>
+              </div>
+              <p className="impact-label">faster ordering</p>
+            </div>
+
+            <div className="impact-card">
+              <div className="impact-number">
+                <span className="impact-value">{impactValues[2]}</span>
+                <span className="impact-suffix">%</span>
+              </div>
+              <p className="impact-label">less waiting time</p>
+            </div>
+          </div>
         </div>
       </section>
 
