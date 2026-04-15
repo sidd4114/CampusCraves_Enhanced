@@ -37,6 +37,7 @@
   background: rgba(255, 255, 255, 0.08);
   transform: translateX(-50%);
   box-shadow: 0 0 20px rgba(201, 169, 110, 0.2);
+  z-index: 0;
 }
 
 .timeline-line-fill {
@@ -54,6 +55,8 @@
   display: flex;
   flex-direction: column;
   gap: 80px;
+  position: relative;
+  z-index: 1;
 }
 
 .timeline-item {
@@ -141,6 +144,10 @@
   .timeline-line {
     left: 20px;
   }
+
+  .timeline-items {
+    padding-left: 36px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -160,5 +167,9 @@
 
   .timeline-line {
     left: 12px;
+  }
+
+  .timeline-items {
+    padding-left: 28px;
   }
 }

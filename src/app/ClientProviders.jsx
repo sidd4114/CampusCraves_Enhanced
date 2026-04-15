@@ -13,6 +13,7 @@ export default function ClientProviders({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showLoader, setShowLoader] = useState(true);
+  const [pageLoaded, setPageLoaded] = useState(false);
   const pathname = usePathname();
   const loaderRef = useRef(null);
   const loaderContentRef = useRef(null);
@@ -27,13 +28,25 @@ export default function ClientProviders({ children }) {
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (document.readyState === 'complete') {
+      setPageLoaded(true);
+      return;
+    }
+
+    const handleLoad = () => setPageLoaded(true);
+    window.addEventListener('load', handleLoad, { once: true });
+    return () => window.removeEventListener('load', handleLoad);
+  }, []);
+
+  useEffect(() => {
     if (!loaderRef.current || !loaderContentRef.current) return;
 
     if (loaderTweenRef.current) {
       loaderTweenRef.current.kill();
     }
 
-    if (loading) {
+    if (loading || !pageLoaded) {
       setShowLoader(true);
       gsap.set(loaderRef.current, { autoAlpha: 1, pointerEvents: 'auto' });
       gsap.set(loaderContentRef.current, { y: 10, scale: 0.98, opacity: 0 });
@@ -65,7 +78,7 @@ export default function ClientProviders({ children }) {
         loaderTweenRef.current.kill();
       }
     };
-  }, [pathname, loading]);
+  }, [pathname, loading, pageLoaded]);
 
   const handleLogout = async () => {
     try {
@@ -83,7 +96,7 @@ export default function ClientProviders({ children }) {
   const isAuthPage = pathname === '/login' || pathname === '/signup';
   const isAdminPage = pathname.startsWith('/admin');
 
-  if (loading && !showLoader) return null;
+  if ((loading || !pageLoaded) && !showLoader) return null;
 
   return (
     <StoreContextProvider>
