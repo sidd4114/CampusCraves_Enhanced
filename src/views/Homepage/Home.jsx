@@ -22,6 +22,7 @@ function Home() {
   const [isPinned, setIsPinned] = useState(true);
   const [smoothProgress, setSmoothProgress] = useState(0);
   const [framesReady, setFramesReady] = useState(false);
+  const [preloadStarted, setPreloadStarted] = useState(false);
   const targetProgressRef = useRef(0);
   const smoothProgressRef = useRef(0);
   const rafRef = useRef(null);
@@ -29,6 +30,7 @@ function Home() {
   const touchStartRef = useRef(null);
   const canvasRef = useRef(null);
   const frameCacheRef = useRef([]);
+  const heroRef = useRef(null);
   const revealSectionRef = useRef(null);
   const revealTextRef = useRef(null);
   const revealOriginalTextRef = useRef('');
@@ -46,28 +48,65 @@ function Home() {
 
   useEffect(() => {
     let isMounted = true;
-    const preloadFrames = async () => {
-      const cache = frameSources.map((src) => new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => resolve(img);
-        img.src = src;
-      }));
-
-      const loaded = await Promise.all(cache);
-      frameCacheRef.current = loaded;
-
+    const firstFrame = new Image();
+    firstFrame.onload = () => {
+      frameCacheRef.current[0] = firstFrame;
       if (isMounted) {
         setFramesReady(true);
-        setFrameIndex((value) => value);
+        setFrameIndex(0);
       }
     };
+    firstFrame.onerror = () => {
+      if (isMounted) {
+        setFramesReady(true);
+      }
+    };
+    firstFrame.src = frameSources[0];
 
-    preloadFrames();
     return () => {
       isMounted = false;
     };
   }, [frameSources]);
+
+  useEffect(() => {
+    if (!heroRef.current || preloadStarted) return;
+
+    const startPreload = () => {
+      if (preloadStarted) return;
+      setPreloadStarted(true);
+
+      const loadAll = () => {
+        frameSources.forEach((src, idx) => {
+          if (frameCacheRef.current[idx]) return;
+          const img = new Image();
+          img.onload = () => { frameCacheRef.current[idx] = img; };
+          img.onerror = () => { frameCacheRef.current[idx] = img; };
+          img.src = src;
+        });
+      };
+
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(loadAll, { timeout: 1200 });
+      } else {
+        setTimeout(loadAll, 350);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startPreload();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(heroRef.current);
+    return () => observer.disconnect();
+  }, [frameSources, preloadStarted]);
 
   useEffect(() => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
@@ -327,6 +366,7 @@ function Home() {
       <section
         className={`cinematic-hero ${isPinned ? 'is-pinned' : 'is-unpinned'}`}
         aria-label="Cinematic landing hero"
+        ref={heroRef}
       >
         <div className="pin-sticky">
           <div className="frame-stage">
