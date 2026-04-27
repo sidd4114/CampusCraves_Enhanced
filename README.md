@@ -4,6 +4,10 @@
 
 ---
 
+## 🌐 Live Prototype
+
+🚀 **Live Demo:** https://campuscraves.vercel.app  
+
 ## 🌟 Background & Context
 
 **CampusCraves** was originally initiated as a **second-year mini project**.  
