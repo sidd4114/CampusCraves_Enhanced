@@ -66,7 +66,10 @@ const StoreContextProvider = (props) => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        let itemInfo = foodList.find((product) => product._id === item);
+        // foodList may still be loading (async Firestore fetch) or the item
+        // may have been removed from the menu — skip rather than crash
+        const itemInfo = foodList.find((product) => product._id === item);
+        if (!itemInfo) continue;
         totalAmount += itemInfo.price * cartItems[item];
       }
     }
