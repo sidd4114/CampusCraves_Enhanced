@@ -81,14 +81,15 @@ function Home() {
       window.__ccFramesLoaded = false;
       window.__ccFramesPlayable = false;
 
-      const initialBatch = Math.min(36, FRAME_COUNT);
+      // ── Concurrent batch loader ──────────────────────────────────────────────
+      // Load `concurrency` frames in parallel at a time instead of one-by-one.
+      // This cuts initial load from ~48 sequential round-trips to ~3 batches.
+      const INITIAL_BATCH = Math.min(48, FRAME_COUNT); // frames needed to start play
+      const CONCURRENCY   = 16;                        // parallel fetches
       let cancelled = false;
 
-      const loadFrame = (idx) => new Promise((resolve) => {
-        if (frameCacheRef.current[idx]) {
-          resolve();
-          return;
-        }
+      const loadFrameImg = (idx) => new Promise((resolve) => {
+        if (frameCacheRef.current[idx]) { resolve(); return; }
         const img = new Image();
         img.decoding = 'async';
         img.onload = () => {
@@ -97,17 +98,25 @@ function Home() {
           resolve();
         };
         img.onerror = () => {
-          frameCacheRef.current[idx] = img;
+          frameCacheRef.current[idx] = img; // cache even on error so we skip it
           resolve();
         };
         img.src = frameSources[idx];
       });
 
-      const loadInitial = async () => {
-        for (let i = 1; i < initialBatch; i += 1) {
-          if (cancelled) return;
-          await loadFrame(i);
+      // Batch-parallel loader: processes `concurrency` items at a time
+      const loadBatched = async (start, end, concurrency) => {
+        for (let i = start; i < end && !cancelled; i += concurrency) {
+          const batchEnd = Math.min(i + concurrency, end);
+          const batch = [];
+          for (let j = i; j < batchEnd; j++) batch.push(loadFrameImg(j));
+          await Promise.all(batch);
         }
+      };
+
+      const loadInitial = async () => {
+        // Frame 0 is already loading/loaded in the other useEffect — skip it
+        await loadBatched(1, INITIAL_BATCH, CONCURRENCY);
         if (!cancelled) {
           setFramesPlayable(true);
           window.__ccFramesPlayable = true;
@@ -116,10 +125,7 @@ function Home() {
       };
 
       const loadRest = async () => {
-        for (let i = initialBatch; i < frameSources.length; i += 1) {
-          if (cancelled) return;
-          await loadFrame(i);
-        }
+        await loadBatched(INITIAL_BATCH, FRAME_COUNT, CONCURRENCY);
         if (!cancelled) {
           window.__ccFramesLoaded = true;
           window.dispatchEvent(new Event('cc:frames-loaded'));
@@ -128,15 +134,13 @@ function Home() {
 
       loadInitial().then(() => {
         if ('requestIdleCallback' in window) {
-          window.requestIdleCallback(loadRest, { timeout: 1500 });
+          window.requestIdleCallback(loadRest, { timeout: 2000 });
         } else {
-          setTimeout(loadRest, 500);
+          setTimeout(loadRest, 300);
         }
       });
 
-      return () => {
-        cancelled = true;
-      };
+      return () => { cancelled = true; };
     };
 
     const observer = new IntersectionObserver(
@@ -148,7 +152,7 @@ function Home() {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 } // trigger slightly earlier — 10% visible is enough
     );
 
     observer.observe(heroRef.current);
