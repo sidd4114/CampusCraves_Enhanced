@@ -24,6 +24,8 @@ function Home() {
   const [framesReady, setFramesReady] = useState(false);
   const [preloadStarted, setPreloadStarted] = useState(false);
   const [framesPlayable, setFramesPlayable] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);       // true → use video
+  const [videoReady, setVideoReady] = useState(false);   // first frame painted
   const targetProgressRef = useRef(0);
   const smoothProgressRef = useRef(0);
   const rafRef = useRef(null);
@@ -73,7 +75,7 @@ function Home() {
   }, [frameSources]);
 
   useEffect(() => {
-    if (!heroRef.current || preloadStarted) return;
+    if (!heroRef.current || preloadStarted || isMobile) return; // skip on mobile — video is used instead
 
     const startPreload = () => {
       if (preloadStarted) return;
@@ -157,10 +159,14 @@ function Home() {
 
     observer.observe(heroRef.current);
     return () => observer.disconnect();
-  }, [frameSources, preloadStarted]);
+  }, [frameSources, preloadStarted, isMobile]);
 
   useEffect(() => {
-    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const narrow = window.innerWidth < 900;
+    setIsTouchDevice(touch);
+    // Use video on any touch/narrow device — no frame-scrub, loads in <2s
+    setIsMobile(touch || narrow);
   }, []);
 
   useEffect(() => {
@@ -435,11 +441,34 @@ function Home() {
       >
         <div className="pin-sticky">
           <div className="frame-stage">
-            <canvas
-              className="frame-canvas"
-              ref={canvasRef}
-              aria-hidden="true"
-            />
+            {/* ── Mobile: autoplay video (fast, hardware-decoded) ── */}
+            {isMobile ? (
+              <>
+                {!videoReady && (
+                  <div className="hero-video-loader" aria-hidden="true">
+                    <div className="hero-video-spinner" />
+                  </div>
+                )}
+                <video
+                  className="hero-video"
+                  src="/IMG_4785.MP4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  onCanPlay={() => setVideoReady(true)}
+                  aria-hidden="true"
+                />
+              </>
+            ) : (
+              /* ── Desktop: frame-scrub canvas ── */
+              <canvas
+                className="frame-canvas"
+                ref={canvasRef}
+                aria-hidden="true"
+              />
+            )}
             <motion.div className="hero-overlay" style={{ opacity: overlayOpacity }}>
               <h1
                 className="parallax-title"

@@ -15,7 +15,8 @@ const Checkout = () => {
   const [pickupTime, setPickupTime] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
-  const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
+  // Requests go to Next.js API routes (same-origin proxy → Railway)
+  // This eliminates CORS entirely — no cross-origin fetch from the browser
   
   useEffect(() => {
     const loadRazorpay = () => {
@@ -56,7 +57,7 @@ const Checkout = () => {
       );
 
       // Step 1: Create Razorpay order on backend
-      const response = await fetch(`${BACKEND_URL}/api/create-order`, {
+      const response = await fetch("/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ totalAmount }),
@@ -92,7 +93,7 @@ const Checkout = () => {
         handler: async function (paymentResponse) {
           try {
             // Step 3: Verify payment server-side
-            const verifyRes = await fetch(`${BACKEND_URL}/api/verify-payment`, {
+            const verifyRes = await fetch("/api/verify-payment", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
