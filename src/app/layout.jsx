@@ -6,6 +6,9 @@ import ClientProviders from './ClientProviders';
 export const metadata = {
   title: 'CampusCraves',
   description: 'Campus food ordering platform',
+  icons: {
+    icon: '/campuslogo.png',
+  },
 };
 
 export const viewport = {

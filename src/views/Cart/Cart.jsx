@@ -37,11 +37,11 @@ const Cart = () => {
               </div>
               <br />
               <hr />
-          {foodList.map((item, index) => {
+          {foodList.map((item) => {
             if (cartItems[item._id] > 0) {
               return (
-                <>
-                  <div className="cart-items-title cart-items-item" key={index}>
+                <React.Fragment key={item._id}>
+                  <div className="cart-items-title cart-items-item">
                     <img src={item.image} alt={item.name}></img>
                     <p>{item.name}</p>
                     <p>₹{item.price}</p>
@@ -50,7 +50,7 @@ const Cart = () => {
                     <p onClick={() => removeFromCart(item._id)} className="cross">X</p>
                   </div>
                   <hr />
-                </>
+                </React.Fragment>
               );
             }
           })}

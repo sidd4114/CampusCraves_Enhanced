@@ -14,10 +14,15 @@ const Checkout = () => {
   const [pickupDate, setPickupDate] = useState("");
   const [pickupTime, setPickupTime] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
   // Requests go to Next.js API routes (same-origin proxy → Railway)
   // This eliminates CORS entirely — no cross-origin fetch from the browser
   
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   useEffect(() => {
     const loadRazorpay = () => {
       const script = document.createElement("script");
@@ -193,7 +198,7 @@ const Checkout = () => {
       <h2>Checkout</h2>
       <div className="cart-summary">
         <h3>Order Summary</h3>
-        {Object.keys(cartItems).length === 0 ? (
+        {!isMounted || Object.keys(cartItems).length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
           <>
@@ -279,7 +284,7 @@ const Checkout = () => {
       <button
         className="place-order-btn"
         onClick={handleSubmit}
-        disabled={isProcessing || Object.keys(cartItems).length === 0}
+        disabled={!isMounted || isProcessing || Object.keys(cartItems).length === 0}
       >
         {isProcessing ? "Processing…" : `Pay ₹${getTotalCartAmount() + 20 + Math.round(getTotalCartAmount() * 0.05)}`}
       </button>

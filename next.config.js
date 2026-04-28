@@ -43,6 +43,14 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/favicon.ico',
+        destination: '/campuslogo.png',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
